@@ -4,6 +4,9 @@ An idea that might be nothing, we'll see.
 Currently creating this to keep me coldplunging. When everything is working, it would be cool to rewrite it so the use-case can be set by user.
 
 Will be quite messy as I'm learning by doing.
+## TODO
+- styling
+- introduce caching to minimize DB requests
 
 ## Stack
 - React Native
@@ -100,6 +103,8 @@ Introduction to the App
 
 1. clone the repo
 2. run npm install
+3. create a .env file with supabase credentials
+4. set permissions in supabase
 
 ## Troubleshooting
 
