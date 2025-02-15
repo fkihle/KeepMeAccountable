@@ -5,17 +5,22 @@ import { supabase } from 'utils/supabase';
 
 
 export default function ColdPlungeScreen() {
-  const [temp, setTemp] = useState<number>(0);
-  const [mins, setMins] = useState<number>(0);
-  const [success, setSuccess] = useState<boolean>(false);
+  const [temp, setTemp] = useState<string>('');
+  const [mins, setMins] = useState<string>('');
+
+  const [incorrectMin, setIncorrectMin] = useState<boolean>(false);
+  const [incorrectTemp, setIncorrectTemp] = useState<boolean>(false);
   
+  const [success, setSuccess] = useState<boolean>(false);
+
   const sendData = async () => {
-    if (temp < 0 || temp > 45) {
+    if (parseFloat(temp) < 0.0 || parseFloat(temp) > 45.0 || isNaN(parseFloat(temp))) {
         console.log("Enter a valid temperature");
-        return;
+        setIncorrectTemp(true);
     }
-    if (mins < 0 || mins > 30) {
+    if (parseFloat(mins) < 0.0 || parseFloat(mins) > 30.0 || isNaN(parseFloat(mins))) {
         console.log("Enter a valid minute amount");
+        setIncorrectMin(true);
         return;
     }
     try {
@@ -25,8 +30,8 @@ export default function ColdPlungeScreen() {
         posted: new Date()
       });
 
-      setTemp(0);
-      setMins(0);
+      setTemp('');
+      setMins('');
       setSuccess(true);
     } catch (error) {
       console.error('Error registering plunge: ', error);
@@ -39,30 +44,38 @@ export default function ColdPlungeScreen() {
       <H2>Register Plunge</H2>
       <Form gap="$2" onSubmit={() => sendData()} >
         <XStack gap="$2" items="center" width="100%">
-         <SizableText size="$6" flex={1}>Temperature:</SizableText>
+          <SizableText size="$6" flex={1}>Temperature:</SizableText>
           <Input
             value={temp.toString()}
             onChangeText={(text) => {
               const sanitizedText = text.replace(',', '.');
-              setTemp(Number(sanitizedText));
+              setTemp(text ? sanitizedText : '');
             }}
-            placeholder='Temp'
             keyboardType='numeric'
             width={100}
           />
         </XStack>
+        <XStack gap="$2" items="center" width="100%">
+        {incorrectTemp && (
+            <SizableText size="$6" color="$red9">Enter a valid temperature</SizableText>
+          )}
+          </XStack>
         <XStack gap="$2" items="center">
           <SizableText size="$6" flex={1}>Minutes:</SizableText>
-          <Input            
+          <Input
             value={mins.toString()}
             onChangeText={(text) => {
               const sanitizedText = text.replace(',', '.');
-              setMins(Number(sanitizedText));
+              setMins(text ? sanitizedText : '');
             }}
-            placeholder='Mins'
             keyboardType='numeric'
             width={100}
           />
+        </XStack>
+        <XStack gap="$2" items="center" width="100%">
+          {incorrectMin && (
+            <SizableText size="$6" color="$red9">Enter a valid minute amount</SizableText>
+          )}
         </XStack>
         
           
@@ -72,7 +85,10 @@ export default function ColdPlungeScreen() {
           Register Plunge
         </Button>
       </Form.Trigger>
-      {success ? (<SizableText size="$6">Plunge registered!</SizableText>) : (<></>)}
+      {success && (
+        <SizableText size="$6">Plunge registered!</SizableText>
+      )}
+      {success && setTimeout(() => setSuccess(false), 3000)}
     </Form>
 
     </YStack>
