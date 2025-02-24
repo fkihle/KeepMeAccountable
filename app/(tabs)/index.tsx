@@ -1,7 +1,13 @@
 
 import { useState } from 'react';
-import { Button, Form, H2, Input, SizableText, XStack, YStack } from 'tamagui';
+import { Button, Form, H2, Input, SizableText, Spinner, XStack, YStack } from 'tamagui';
+import CountdownTimer from 'utils/countdownTimer';
 import { supabase } from 'utils/supabase';
+// TODO:
+// - Resolve: "Text strings must be rendered within a <Text> component"
+// - Handle temp and mins as floats, not stings
+// - Add input format validation for temp and mins
+// - Create countdown timer for plunge
 
 
 export default function ColdPlungeScreen() {
@@ -12,6 +18,7 @@ export default function ColdPlungeScreen() {
   const [incorrectTemp, setIncorrectTemp] = useState<boolean>(false);
   
   const [success, setSuccess] = useState<boolean>(false);
+  const [registering, setRegistering] = useState<boolean>(false);
 
   const sendData = async () => {
     if (parseFloat(temp) < 0.0 || parseFloat(temp) > 45.0 || isNaN(parseFloat(temp))) {
@@ -24,6 +31,7 @@ export default function ColdPlungeScreen() {
         return;
     }
     try {
+      setRegistering(true);
       const { error } = await supabase.from('coldplungedata').insert({
         temperature: temp,
         minutes: mins,
@@ -33,6 +41,7 @@ export default function ColdPlungeScreen() {
       setTemp('');
       setMins('');
       setSuccess(true);
+      setRegistering(false);
     } catch (error) {
       console.error('Error registering plunge: ', error);
     }
@@ -46,7 +55,7 @@ export default function ColdPlungeScreen() {
         <XStack gap="$2" items="center" width="100%">
           <SizableText size="$6" flex={1}>Temperature:</SizableText>
           <Input
-            value={temp.toString()}
+            value={temp}
             onChangeText={(text) => {
               const sanitizedText = text.replace(',', '.');
               setTemp(text ? sanitizedText : '');
@@ -63,7 +72,7 @@ export default function ColdPlungeScreen() {
         <XStack gap="$2" items="center">
           <SizableText size="$6" flex={1}>Minutes:</SizableText>
           <Input
-            value={mins.toString()}
+            value={mins}
             onChangeText={(text) => {
               const sanitizedText = text.replace(',', '.');
               setMins(text ? sanitizedText : '');
@@ -78,18 +87,21 @@ export default function ColdPlungeScreen() {
           )}
         </XStack>
         
-          
-      {/* introduce spinner icon when processesing registration */}
-      <Form.Trigger asChild>
-        <Button>
-          Register Plunge
-        </Button>
-      </Form.Trigger>
-      {success && (
-        <SizableText size="$6">Plunge registered!</SizableText>
-      )}
-      {success && setTimeout(() => setSuccess(false), 3000)}
-    </Form>
+        <Form.Trigger asChild>
+          <Button icon={registering ? <Spinner /> : undefined}>
+            <SizableText>Register Plunge</SizableText>
+          </Button>
+        </Form.Trigger>
+        {success && (
+          <SizableText size="$6">Plunge registered!</SizableText>
+        )}
+        {success && setTimeout(() => setSuccess(false), 3000)}
+      </Form>
+
+      {/* Countdown timer */}
+      <XStack gap="$4" items="center" width="100%">
+        <CountdownTimer />
+      </XStack>
 
     </YStack>
   );

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "keep-me-accountable",
-    "slug": "keep-me-accountable",
+    "slug": "coldplunge",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -12,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -44,6 +46,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "eb44c04a-dfe2-43bf-9785-e9de314053f0"
+      }
+    },
+    "owner": "kihle"
   }
 }

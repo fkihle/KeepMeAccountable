@@ -3,10 +3,13 @@ An idea that might be nothing, we'll see.
 
 Currently creating this to keep me coldplunging. When everything is working, it would be cool to rewrite it so the use-case can be set by user.
 
-Will be quite messy as I'm learning by doing.
+Will be quite messy as I'm learning by doing. README used as personal project tracker for now.
+
 ## TODO
 - styling
+- user login (for server storage option)
 - introduce caching to minimize DB requests
+- use of local storage for anonymous accounts (default)
 
 ## Stack
 - React Native
@@ -42,6 +45,22 @@ npx expo install --fix
 npm install @supabase/supabase-js
 npm install react-native-url-polyfill/auto
 npm install @react-native-async-storage/async-storage
+
+# Scroll picker
+npm install react-native-infinite-wheel-picker
+# Confetti canon
+npm install react-native-confetti-cannon
+# Sound
+npm install expo-av
+```
+
+## Check and Update dependencies
+
+```shell
+# Check
+npx expo-doctor
+# Update
+npx expo install --check
 ```
 
 ## Configure Supabase
@@ -88,7 +107,7 @@ scan the QR code in the `Expo Go` app.
 
 README pt 2
 
-# Keep Me Accountable
+# Keep Me Accountable (download and run from github)
 
 Introduction to the App
 
@@ -110,4 +129,4 @@ Introduction to the App
 
 1. Consistant error that shouldn't persist?
    1. Try clearing the cache with `npx expo start --reset-cache`
-note because this is in a monorepo had to remove react, react-dom, and react-native-web deps and change metro.config.js a bit.
+   
