@@ -49,60 +49,60 @@ export default function ColdPlungeScreen() {
 
 
   return (
-    <YStack flex={1} items="center" gap="$8" px="$10" pt="$5" bg="$background">
-      <H2>Register Plunge</H2>
-      <Form gap="$2" onSubmit={() => sendData()} >
-        <XStack gap="$2" items="center" width="100%">
-          <SizableText size="$6" flex={1}>Temperature:</SizableText>
-          <Input
-            value={temp}
-            onChangeText={(text) => {
-              const sanitizedText = text.replace(',', '.');
-              setTemp(text ? sanitizedText : '');
-            }}
-            keyboardType='numeric'
-            width={100}
-          />
-        </XStack>
-        <XStack gap="$2" items="center" width="100%">
-        {incorrectTemp && (
-            <SizableText size="$6" color="$red9">Enter a valid temperature</SizableText>
-          )}
+      <YStack flex={1} items="center" gap="$8" px="$2" pt="$2" bg="$background">
+        <H2>Register Plunge</H2>
+        <Form gap="$2" width="$20" onSubmit={() => sendData()} >
+          <XStack gap="$2" items="center" width="100%">
+            <SizableText size="$6" flex={1}>Temperature:</SizableText>
+            <Input
+              value={temp}
+              onChangeText={(text) => {
+                const sanitizedText = text.replace(',', '.');
+                setTemp(text ? sanitizedText : '');
+              }}
+              keyboardType='numeric'
+              width={100}
+            />
           </XStack>
-        <XStack gap="$2" items="center">
-          <SizableText size="$6" flex={1}>Minutes:</SizableText>
-          <Input
-            value={mins}
-            onChangeText={(text) => {
-              const sanitizedText = text.replace(',', '.');
-              setMins(text ? sanitizedText : '');
-            }}
-            keyboardType='numeric'
-            width={100}
-          />
-        </XStack>
-        <XStack gap="$2" items="center" width="100%">
-          {incorrectMin && (
-            <SizableText size="$6" color="$red9">Enter a valid minute amount</SizableText>
+          <XStack gap="$2" items="center" width="100%">
+          {incorrectTemp && (
+              <SizableText size="$6" color="$red9">Enter a valid temperature</SizableText>
+            )}
+            </XStack>
+          <XStack gap="$2" items="center">
+            <SizableText size="$6" flex={1}>Minutes:</SizableText>
+            <Input
+              value={mins}
+              onChangeText={(text) => {
+                const sanitizedText = text.replace(',', '.');
+                setMins(text ? sanitizedText : '');
+              }}
+              keyboardType='numeric'
+              width={100}
+            />
+          </XStack>
+          <XStack gap="$2" items="center" width="100%">
+            {incorrectMin && (
+              <SizableText size="$6" color="$red9">Enter a valid minute amount</SizableText>
+            )}
+          </XStack>
+          
+          <Form.Trigger asChild>
+            <Button icon={registering ? <Spinner /> : undefined}>
+              <SizableText>Register Plunge</SizableText>
+            </Button>
+          </Form.Trigger>
+          {success && (
+            <SizableText size="$6">Plunge registered!</SizableText>
           )}
+          {success && setTimeout(() => setSuccess(false), 3000)}
+        </Form>
+
+        {/* Countdown timer */}
+        <XStack gap="$4" items="center" width="100%">
+          <CountdownTimer />
         </XStack>
-        
-        <Form.Trigger asChild>
-          <Button icon={registering ? <Spinner /> : undefined}>
-            <SizableText>Register Plunge</SizableText>
-          </Button>
-        </Form.Trigger>
-        {success && (
-          <SizableText size="$6">Plunge registered!</SizableText>
-        )}
-        {success && setTimeout(() => setSuccess(false), 3000)}
-      </Form>
 
-      {/* Countdown timer */}
-      <XStack gap="$4" items="center" width="100%">
-        <CountdownTimer />
-      </XStack>
-
-    </YStack>
+      </YStack>
   );
 }

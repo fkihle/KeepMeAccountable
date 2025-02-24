@@ -58,7 +58,6 @@ export default function Results() {
             contentContainerStyle={{ flexGrow: 1 }}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
-
             <YStack flex={1} items="center" gap="$8" px="$2" pt="$2" bg="$background">
                 <H2>Results</H2>
 
@@ -82,10 +81,7 @@ export default function Results() {
                         </YStack>
                     </YStack>
                 </Card>
-
             </YStack>
-
-            
         </ScrollView>
     );
 }

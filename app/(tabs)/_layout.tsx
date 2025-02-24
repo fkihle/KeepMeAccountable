@@ -8,7 +8,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-      tabBarActiveTintColor: theme.red10.val,
+      tabBarActiveTintColor: theme.accent4.val,
       tabBarStyle: {
         backgroundColor: theme.background.val,
         borderTopColor: theme.borderColor.val,
@@ -23,21 +23,21 @@ export default function TabLayout() {
       <Tabs.Screen
       name="index"
       options={{
-        title: 'Register Plunge',
+        title: '',
         tabBarIcon: ({ color }) => <Atom color={color as any} />,
       }}
       />
       <Tabs.Screen
       name="history"
       options={{
-        title: 'History',
+        title: '',
         tabBarIcon: ({ color }) => <History color={color as any} />,
       }}
       />
       <Tabs.Screen
       name="results"
       options={{
-        title: 'Results',
+        title: '',
         tabBarIcon: ({ color }) => <Award color={color as any} />,
       }}
       />
